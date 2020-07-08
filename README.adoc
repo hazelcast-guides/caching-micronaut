@@ -1,0 +1,128 @@
+:github-address: https://github.com/hazelcast-guides/hazelcast-embedded-micronaut
+:templates-url: https://raw.githubusercontent.com/hazelcast-guides/adoc-templates/master
+:hazelcast: Hazelcast IMDG
+:framework:  Micronaut
+
+= Getting Started with Hazelcast using Spring Boot
+
+This guide will get you started to use Hazelcast in a Micronaut application.
+
+include::{templates-url}/link-to-repo.adoc[]
+
+== What You’ll Learn
+
+include::{templates-url}/microservices/what-you-will-learn.adoc[]
+
+== Prerequisites
+
+- ~15 minutes
+- Apache Maven 3.2+
+- Jdk 1.8+
+
+== The Micronaut Application Structure
+
+The application in the initial directory is a basic Micronaut app having 3 endpoints:
+
+ -   / is the homepage returning “Homepage” string only
+ -   /put is the mapping where key and value is saved to a local map through @CachePut annotation.
+ -   /get is the mapping where the values in the local map can be obtained by keys through @Cacheable annotation.
+
+
+== Using Hazelcast in the Application
+
+To configure caching with Hazelcast, firstly we will add some dependencies to our pom.xml file:
+[source,xml]
+----
+        <dependency>
+            <groupId>io.micronaut.cache</groupId>
+            <artifactId>micronaut-cache-hazelcast</artifactId>
+            <version>${micronaut-cache-hazelcast.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>${hazelcast.version}</version>
+        </dependency>
+----
+The first dependency is for Micronaut Cache for Hazelcast, the second one is for Hazelcast IMDG itself,
+
+Now, we just need to add a configuration bean to enable Hazelcast:
+[source,java]
+----
+@Singleton
+public class HazelcastAdditionalSettings
+        implements BeanCreatedEventListener<HazelcastMemberConfiguration> {
+
+    public HazelcastMemberConfiguration onCreated(BeanCreatedEvent<HazelcastMemberConfiguration> event) {
+        HazelcastMemberConfiguration configuration = event.getBean();
+        configuration.getGroupConfig().setName("micronaut-cluster");
+        JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
+        joinConfig.getMulticastConfig().setEnabled(false);
+        joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
+        return configuration;
+    }
+}
+----
+This bean creates a HazelcastAdditionalSettings object to configure Hazelcast members. We enable TCP/IP config for discovery.
+
+
+Our application with Hazelcast caching is now ready to go. We do not need to change anything else because we are already using Micronaut caching annotations in CommandService class.
+
+
+== Running the Sample Application
+
+Build the application by using maven, make sure you are in the project directory
+
+[source]
+----
+mvn clean package
+----
+
+Run the application by typing
+[source]
+----
+java -jar target/hazelcast-embeddded-micronaut-0.1.0.jar 8080
+----
+
+Open another terminal and rerun the application by typing
+[source]
+----
+java -jar target/hazelcast-embeddded-micronaut-0.1.0.jar 8081
+----
+
+
+//
+//After both application instances initialized, you should see the Hazelcast cluster formation in the output similar below:
+//[source]
+//----
+//...
+//Members {size:2, ver:2} [
+//Member [192.168.1.64]:5701 - 520aec3f-58a6-4fcb-a3c7-498dcf37d8ff
+//Member [192.168.1.64]:5702 - 5c03e467-d457-4847-b49a-745a335db557 this
+//]
+//...
+//----
+
+
+Now, you can make calls to application endpoints to put data and get it back. Firstly, open another terminal and run the following command to put the data into Hazelcast distributed map:
+[source]
+----
+curl --data "key=key1&value=hazelcast" "localhost:8080/put"
+----
+
+You will see the value in the output. Then run the command below to get the data back. Please note that the call is made to the other application instance:
+[source]
+----
+curl "localhost:8081/get?key=key1"
+----
+
+Again, you will see the value in the output since the data is distributed among Hazelcast cluster instances and can be accessed from any of them.
+
+== Summary
+
+In this guide, we developed a simple application that stores the data in a Hazelcast instance. We started two application instances, and they formed a Hazelcast cluster. Since the data was shared among Hazelcast cluster instances, we could access it from both application instances.
+
+== See Also
+
+- https://github.com/hazelcast-guides/caching-springboot-microservices-on-kubernetes[Caching SpringBoot Microservices with Hazelcast in Kubernetes]
+- https://github.com/hazelcast-guides/hazelcast-quarkus[Hazelcast and Quarkus]
