@@ -3,7 +3,7 @@
 :hazelcast: Hazelcast IMDG
 :framework:  Micronaut
 
-= Getting Started with Hazelcast using Spring Boot
+= Getting Started with Hazelcast using Micronaut
 
 This guide will get you started to use Hazelcast in a Micronaut application.
 
