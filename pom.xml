@@ -16,7 +16,7 @@
         <hazelcast.version>3.12.3</hazelcast.version>
         <hazelcast-kubernetes.version>1.5.1</hazelcast-kubernetes.version>
         <micronaut.version>1.3.0.RC1</micronaut.version>
-        <micronaut-cache-hazelcast.version>1.0.0.RC1</micronaut-cache-hazelcast.version>
+        <micronaut-cache-hazelcast.version>2.0.0</micronaut-cache-hazelcast.version>
     </properties>
 
     <build>
