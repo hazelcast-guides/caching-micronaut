@@ -55,7 +55,6 @@ public class HazelcastAdditionalSettings
 
     public HazelcastMemberConfiguration onCreated(BeanCreatedEvent<HazelcastMemberConfiguration> event) {
         HazelcastMemberConfiguration configuration = event.getBean();
-        configuration.getGroupConfig().setName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
@@ -73,21 +72,21 @@ Our application with Hazelcast caching is now ready to go. We do not need to cha
 
 Build the application by using maven, make sure you are in the project directory
 
-[source]
+[source,shell]
 ----
 mvn clean package
 ----
 
 Run the application by typing
-[source]
+[source,shell]
 ----
-java -jar target/hazelcast-embeddded-micronaut-0.1.0.jar 8080
+java -jar target/hazelcast-embedded-micronaut-0.1.0.jar 8080
 ----
 
 Open another terminal and rerun the application by typing
-[source]
+[source,shell]
 ----
-java -jar target/hazelcast-embeddded-micronaut-0.1.0.jar 8081
+java -jar target/hazelcast-embedded-micronaut-0.1.0.jar 8081
 ----
 
 
@@ -105,13 +104,13 @@ java -jar target/hazelcast-embeddded-micronaut-0.1.0.jar 8081
 
 
 Now, you can make calls to application endpoints to put data and get it back. Firstly, open another terminal and run the following command to put the data into Hazelcast distributed map:
-[source]
+[source,shell]
 ----
-curl --data "key=key1&value=hazelcast" "localhost:8080/put"
+curl  "localhost:8080/put?key=key1&value=hazelcast"
 ----
 
 You will see the value in the output. Then run the command below to get the data back. Please note that the call is made to the other application instance:
-[source]
+[source,shell]
 ----
 curl "localhost:8081/get?key=key1"
 ----
