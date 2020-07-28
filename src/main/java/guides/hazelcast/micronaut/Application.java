@@ -7,11 +7,10 @@ import io.micronaut.runtime.Micronaut;
 @Controller
 public class Application {
 
-    private String podName = System.getenv("MY_POD_NAME");
 
     @Get("/")
     public String homepage(){
-        return "Homepage hosted by: " + podName + "\n";
+        return "Homepage\n";
     }
 
     public static void main(String[] args) {
