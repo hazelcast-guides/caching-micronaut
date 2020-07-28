@@ -55,8 +55,10 @@ public class HazelcastAdditionalSettings
 
     public HazelcastMemberConfiguration onCreated(BeanCreatedEvent<HazelcastMemberConfiguration> event) {
         HazelcastMemberConfiguration configuration = event.getBean();
+        configuration.setClusterName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
+        joinConfig.getAwsConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
         return configuration;
     }
@@ -76,6 +78,11 @@ Build the application by using maven, make sure you are in the project directory
 ----
 mvn clean package
 ----
+
+[NOTE]
+====
+The very first request to each application instance will take a bit longer time to respond since the first request causes hazelcast instance to be started.
+====
 
 Run the application by typing
 [source,shell]

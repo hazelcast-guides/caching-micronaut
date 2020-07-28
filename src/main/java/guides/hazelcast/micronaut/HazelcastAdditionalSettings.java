@@ -13,10 +13,11 @@ public class HazelcastAdditionalSettings
 
     public HazelcastMemberConfiguration onCreated(BeanCreatedEvent<HazelcastMemberConfiguration> event) {
         HazelcastMemberConfiguration configuration = event.getBean();
+        configuration.setClusterName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
         joinConfig.getAwsConfig().setEnabled(false);
-        joinConfig.getTcpIpConfig().setEnabled(true).addMember("127.0.0.1");
+        joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
         return configuration;
     }
 }
