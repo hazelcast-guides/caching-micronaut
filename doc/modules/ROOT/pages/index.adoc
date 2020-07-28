@@ -58,7 +58,6 @@ public class HazelcastAdditionalSettings
         configuration.setClusterName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
-        joinConfig.getAwsConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
         return configuration;
     }
@@ -81,7 +80,7 @@ mvn clean package
 
 [NOTE]
 ====
-The very first request to each application instance will take a bit longer time to respond since the first request causes hazelcast instance to be started.
+The very first request to each application instance will take a bit longer time to respond since the first request causes Hazelcast instance to be started.
 ====
 
 Run the application by typing
@@ -132,4 +131,3 @@ In this guide, we developed a simple application that stores the data in a Hazel
 
 - xref:hazelcast-embedded-kubernetes:ROOT:index.adoc[Hazelcast with SpringBoot in Kubernetes]
 - xref:hazelcast-quarkus:ROOT:index.adoc[Hazelcast Client for Quarkus]
-

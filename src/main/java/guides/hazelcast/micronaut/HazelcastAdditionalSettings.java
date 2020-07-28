@@ -16,7 +16,6 @@ public class HazelcastAdditionalSettings
         configuration.setClusterName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
-        joinConfig.getAwsConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
         return configuration;
     }
