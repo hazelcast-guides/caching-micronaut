@@ -14,7 +14,7 @@
         <java.version>1.8</java.version>
         <docker.image.prefix>micronaut</docker.image.prefix>
         <hazelcast.version>4.0.2</hazelcast.version>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
         <micronaut-cache-hazelcast.version>2.0.0</micronaut-cache-hazelcast.version>
     </properties>
 
