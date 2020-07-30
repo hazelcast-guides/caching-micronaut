@@ -1,4 +1,4 @@
-:github-address: https://github.com/hazelcast-guides/hazelcast-embedded-micronaut
+:github-address: https://github.com/hazelcast-guides/caching-micronaut
 :templates-url: templates:ROOT:page$/
 :hazelcast: Hazelcast IMDG
 :framework:  Micronaut
@@ -130,4 +130,4 @@ In this guide, we developed a simple application that stores the data in a Hazel
 == See Also
 
 - xref:hazelcast-embedded-kubernetes:ROOT:index.adoc[Hazelcast with SpringBoot in Kubernetes]
-- xref:hazelcast-quarkus:ROOT:index.adoc[Hazelcast Client for Quarkus]
+- xref:hazelcast-client-quarkus:ROOT:index.adoc[Hazelcast Client for Quarkus]
