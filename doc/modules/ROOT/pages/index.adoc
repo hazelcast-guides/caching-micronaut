@@ -30,7 +30,7 @@ The application in the initial directory is a basic Micronaut app having three e
 
 == Using Hazelcast in the Application
 
-To configure caching with Hazelcast, we'll by adding some dependencies to our `pom.xml` file:
+To configure caching with Hazelcast, we'll start by adding some dependencies to our `pom.xml` file:
 [source,xml]
 ----
 <dependency>
