@@ -17,45 +17,45 @@ include::{templates-url}/microservices/what-you-will-learn.adoc[]
 
 - ~15 minutes
 - Apache Maven 3.2+
-- Jdk 1.8+
+- JDK 1.8+
 
 == The Micronaut Application Structure
 
-The application in the initial directory is a basic Micronaut app having 3 endpoints:
+The application in the initial directory is a basic Micronaut app having three endpoints:
 
- -   / is the homepage returning “Homepage” string only
- -   /put is the mapping where key and value is saved to a local map through @CachePut annotation.
- -   /get is the mapping where the values in the local map can be obtained by keys through @Cacheable annotation.
+-   `/` is the homepage returning “Homepage” string only
+-   `/put` is the mapping where key and value is saved to a local map through `@CachePut` annotation.
+-   `/get` is the mapping where the values in the local map can be obtained by keys through `@Cacheable` annotation.
 
 
 == Using Hazelcast in the Application
 
-To configure caching with Hazelcast, firstly we will add some dependencies to our pom.xml file:
+To configure caching with Hazelcast, we'll by adding some dependencies to our `pom.xml` file:
 [source,xml]
 ----
-        <dependency>
-            <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-hazelcast</artifactId>
-            <version>${micronaut-cache-hazelcast.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>${hazelcast.version}</version>
-        </dependency>
+<dependency>
+    <groupId>io.micronaut.cache</groupId>
+    <artifactId>micronaut-cache-hazelcast</artifactId>
+    <version>${micronaut-cache-hazelcast.version}</version>
+</dependency>
+<dependency>
+    <groupId>com.hazelcast</groupId>
+    <artifactId>hazelcast</artifactId>
+    <version>${hazelcast.version}</version>
+</dependency>
 ----
-The first dependency is for Micronaut Cache for Hazelcast, the second one is for Hazelcast IMDG itself,
+The first dependency is for Micronaut Cache for Hazelcast, the second one is for Hazelcast IMDG itself.
 
 Now, we just need to add a configuration bean to enable Hazelcast:
 [source,java]
 ----
-@Singleton
-public class HazelcastAdditionalSettings
-        implements BeanCreatedEventListener<HazelcastMemberConfiguration> {
+@Factory
+public class HazelcastConfiguration {
 
-    public HazelcastMemberConfiguration onCreated(BeanCreatedEvent<HazelcastMemberConfiguration> event) {
-        HazelcastMemberConfiguration configuration = event.getBean();
-        configuration.setClusterName("micronaut-cluster");
+    @Bean
+    public Config hazelcastConfig() {
+        Config configuration = new Config()
+          .setClusterName("micronaut-clusterx");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
@@ -63,15 +63,15 @@ public class HazelcastAdditionalSettings
     }
 }
 ----
-This bean creates a HazelcastAdditionalSettings object to configure Hazelcast members. We enable TCP/IP config for discovery.
+This allows defining a custom configuration for our Hazelcast instance bean. We enable TCP/IP config for the discovery.
 
 
-Our application with Hazelcast caching is now ready to go. We do not need to change anything else because we are already using Micronaut caching annotations in CommandService class.
+Our application is now ready to go. We don't need to change anything else because we're already using Micronaut caching annotations in the `CommandService` class.
 
 
 == Running the Sample Application
 
-Build the application by using maven, make sure you are in the project directory
+Build the application by using Maven:
 
 [source,shell]
 ----
@@ -80,10 +80,10 @@ mvn clean package
 
 [NOTE]
 ====
-The very first request to each application instance will take a bit longer time to respond since the first request causes Hazelcast instance to be started.
+The very first request to each application instance will take a bit longer time to respond since the first request causes the Hazelcast instance to be started.
 ====
 
-Run the application by typing
+Run the application by typing:
 [source,shell]
 ----
 java -jar target/hazelcast-embedded-micronaut-0.1.0.jar 8080
@@ -109,13 +109,15 @@ java -jar target/hazelcast-embedded-micronaut-0.1.0.jar 8081
 //----
 
 
-Now, you can make calls to application endpoints to put data and get it back. Firstly, open another terminal and run the following command to put the data into Hazelcast distributed map:
+Now, you can issue HTTP calls to read/write data from the cache.
+
+Firstly, open another terminal and run the following command to put the data into Hazelcast distributed map:
 [source,shell]
 ----
 curl  "localhost:8080/put?key=key1&value=hazelcast"
 ----
 
-You will see the value in the output. Then run the command below to get the data back. Please note that the call is made to the other application instance:
+You will see the value in the output. Then run the command below to get the data back. Please note we're calling the other application instance:
 [source,shell]
 ----
 curl "localhost:8081/get?key=key1"

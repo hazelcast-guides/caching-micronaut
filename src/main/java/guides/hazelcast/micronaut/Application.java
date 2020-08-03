@@ -7,8 +7,7 @@ import io.micronaut.runtime.Micronaut;
 @Controller
 public class Application {
 
-
-    @Get("/")
+    @Get()
     public String homepage(){
         return "Homepage\n";
     }
