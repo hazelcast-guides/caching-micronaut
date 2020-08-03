@@ -17,7 +17,7 @@ include::{templates-url}/microservices/what-you-will-learn.adoc[]
 
 - ~15 minutes
 - Apache Maven 3.2+
-- JDK 1.8+
+- JDK 11+
 
 == The Micronaut Application Structure
 
