@@ -1,11 +1,7 @@
 package guides.hazelcast.micronaut;
 
-import com.hazelcast.core.HazelcastInstance;
 import io.micronaut.test.annotation.MicronautTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
