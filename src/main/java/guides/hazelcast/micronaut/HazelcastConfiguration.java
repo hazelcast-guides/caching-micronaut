@@ -11,7 +11,7 @@ public class HazelcastConfiguration {
     @Bean
     public Config hazelcastConfig() {
         Config configuration = new Config()
-          .setClusterName("micronaut-clusterx");
+          .setClusterName("micronaut-cluster");
         JoinConfig joinConfig = configuration.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig().setEnabled(false);
         joinConfig.getTcpIpConfig().setEnabled(true).addMember("localhost");
