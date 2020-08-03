@@ -24,7 +24,7 @@ include::{templates-url}/microservices/what-you-will-learn.adoc[]
 The application in the initial directory is a basic Micronaut app having three endpoints:
 
 -   `/` is the homepage returning “Homepage” string only
--   `/put` is the mapping where key and value is saved to a local map through `@CachePut` annotation.
+-   `/put` is the mapping where key and value are saved to a local map through `@CachePut` annotation.
 -   `/get` is the mapping where the values in the local map can be obtained by keys through `@Cacheable` annotation.
 
 
@@ -44,7 +44,7 @@ To configure caching with Hazelcast, we'll start by adding some dependencies to 
     <version>${hazelcast.version}</version>
 </dependency>
 ----
-The first dependency is for Micronaut Cache for Hazelcast, the second one is for Hazelcast IMDG itself.
+The first dependency is Micronaut Cache for Hazelcast, the second one is Hazelcast IMDG itself.
 
 Now, we just need to add a configuration bean to enable Hazelcast:
 [source,java]
@@ -66,7 +66,7 @@ public class HazelcastConfiguration {
 This allows defining a custom configuration for our Hazelcast instance bean. We enable TCP/IP config for the discovery.
 
 
-Our application is now ready to go. We don't need to change anything else because we're already using Micronaut caching annotations in the `CommandService` class.
+Our application with Hazelcast caching is now ready to go. We don't need to change anything else because we're already using Micronaut caching annotations in the `CommandService` class.
 
 
 == Running the Sample Application
@@ -111,7 +111,7 @@ java -jar target/hazelcast-embedded-micronaut-0.1.0.jar 8081
 
 Now, you can issue HTTP calls to read/write data from the cache.
 
-Firstly, open another terminal and run the following command to put the data into Hazelcast distributed map:
+Firstly, open another terminal and run the following command to put the data into a Hazelcast distributed map:
 [source,shell]
 ----
 curl  "localhost:8080/put?key=key1&value=hazelcast"
