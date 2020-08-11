@@ -1,1 +1,1 @@
-See the guide [here](https://hazelcast-guides.github.io/guides-site/caching-micronaut/index.html).
+See the guide [here](https://guides.hazelcast.org/caching-micronaut).
