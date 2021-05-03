@@ -18,7 +18,7 @@
         <micronaut.version>2.0.1</micronaut.version>
         <hazelcast.version>4.1.1</hazelcast.version>
         <micronaut.version>2.0.1</micronaut.version>
-        <micronaut-cache-hazelcast.version>2.1.0</micronaut-cache-hazelcast.version>
+        <micronaut-cache-hazelcast.version>2.4.0</micronaut-cache-hazelcast.version>
         <exec.mainClass>guides.hazelcast.micronaut.Application</exec.mainClass>
     </properties>
 
