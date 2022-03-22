@@ -1,21 +1,20 @@
-:github-address: https://github.com/hazelcast-guides/caching-micronaut
+= Get Started with Hazelcast and Micronaut
 :templates-url: templates:ROOT:page$/
-:hazelcast: Hazelcast IMDG
+:page-layout: tutorial
+:page-product: cloud
+:page-categories: Getting Started, Caching, Spring Boot, Microservice
+:page-lang: java
+:page-edition: 
+:page-est-time: 15 mins
 :framework:  Micronaut
-
-= Getting Started with Hazelcast using Micronaut
-
-This guide will get you started to use Hazelcast in a Micronaut application.
-
-include::{templates-url}/link-to-repo.adoc[]
+:description: This tutorial will get you started with Hazelcast in a Micronaut application.
 
 == What You’ll Learn
 
-include::{templates-url}/microservices/what-you-will-learn.adoc[]
+include::{templates-url}/microservices/what-you-will-learn.adoc[framework=test]
 
-== Prerequisites
+== Before you Begin
 
-- ~15 minutes
 - Apache Maven 3.2+
 - JDK 11+
 
@@ -28,7 +27,7 @@ The application in the initial directory is a basic Micronaut app having three e
 -   `/get` is the mapping where the values in the local map can be obtained by keys through `@Cacheable` annotation.
 
 
-== Using Hazelcast in the Application
+== Use Hazelcast in the Application
 
 To configure caching with Hazelcast, we'll start by adding some dependencies to our `pom.xml` file:
 [source,xml]
@@ -44,7 +43,7 @@ To configure caching with Hazelcast, we'll start by adding some dependencies to 
     <version>${hazelcast.version}</version>
 </dependency>
 ----
-The first dependency is Micronaut Cache for Hazelcast, the second one is Hazelcast IMDG itself.
+The first dependency is Micronaut Cache for Hazelcast, the second one is Hazelcast itself.
 
 Now, we just need to add a configuration bean to enable Hazelcast:
 [source,java]
@@ -69,7 +68,7 @@ This allows defining a custom configuration for our Hazelcast instance bean. We 
 Our application with Hazelcast caching is now ready to go. We don't need to change anything else because we're already using Micronaut caching annotations in the `CommandService` class.
 
 
-== Running the Sample Application
+== Run the Sample Application
 
 Build the application by using Maven:
 
@@ -127,9 +126,4 @@ Again, you will see the value in the output since the data is distributed among 
 
 == Summary
 
-In this guide, we developed a simple application that stores the data in a Hazelcast instance. We started two application instances, and they formed a Hazelcast cluster. Since the data was shared among Hazelcast cluster instances, we could access it from both application instances.
-
-== See Also
-
-- xref:kubernetes-embedded:ROOT:index.adoc[Embedded Hazelcast on Kubernetes]
-- xref:hazelcast-client-quarkus:ROOT:index.adoc[Hazelcast Client for Quarkus]
+In this tutorial, you developed a simple application that stores the data in a Hazelcast cluster. You started two application instances, and they formed a Hazelcast cluster. Since the data was shared among Hazelcast cluster members, you could access it from both application instances.
