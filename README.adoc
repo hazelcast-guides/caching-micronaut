@@ -1,2 +1,2 @@
-See the link:https://docs.hazelcast.com/tutorials/get-started-micronaut[tutorial].
+See the link:https://docs.hazelcast.com/tutorials/caching-micronaut[tutorial].
 
