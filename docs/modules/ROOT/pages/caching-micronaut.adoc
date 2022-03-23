@@ -1,7 +1,7 @@
 = Get Started with Hazelcast and Micronaut
 :templates-url: templates:ROOT:page$/
 :page-layout: tutorial
-:page-product: platform
+:page-product: imdg
 :page-categories: Getting Started, Caching, Spring Boot, Microservices
 :page-lang: java
 :page-edition: 
